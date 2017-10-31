@@ -1,22 +1,12 @@
 const express = require('express');
+
+const status = require('./routes/status');
+const cars = require('./routes/cars');
+
 const app = express();
 
-const project = require('./package');
-const models = require('./models').db;
-
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
-
-app.get('/api/cars', function (req, res) {
-	models.Car.findAll().then(function(cars){
-		res.send(cars);
-	});
-});
-
-app.get('/api/status', function (req, res) {
-	res.send(project.version);
-});
+app.use('/', status);
+app.use('/cars', cars);
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
